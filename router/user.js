@@ -34,7 +34,6 @@ router.post('/', getHashedPass, async function(req, res, next) {
         await UserModel.create(payload);
         res.status(201).send({operation: 'Success'});
     } catch(e) {
-        res.status(400);
         next(e);
     }
 });
@@ -53,7 +52,7 @@ router.put('/:id', getHashedPass, async function(req, res, next) {
         if(user) {
             res.status(200).send({operation: 'Success'});
         } else {
-            res.send({operation: 'Failure'});
+            res.status(200).send({operation: 'Failure'});
         }
     } catch(e) {
         next(e);
@@ -65,13 +64,14 @@ router.delete('/:id', async function(req, res, next) {
     const { id } = req.params;
     try {
         if(!id) {
+            res.status(400);
             throw new Error('Required contract doesn\'t matches. Please contact Administrator');
         }
         const user = await UserModel.findByIdAndDelete({_id: id});
         if(user) {
-            res.send({operation: 'Success'});
+            res.status(200).send({operation: 'Success'});
         } else {
-            res.send({operation: 'Failure'});
+            res.status(200).send({operation: 'Failure'});
         }
     } catch(e) {
         next(e);
@@ -91,9 +91,9 @@ router.post('/signIn', async function(req, res, next) {
                 httpOnly: true,
                 sameSite: 'strict'
             });
-            res.send({operation: 'success'});
+            res.status(200).send({operation: 'success'});
         } else {
-            res.send({operation: 'failure', response: 'Bad Credentials'});
+            res.status(200).send({operation: 'failure', response: 'Bad Credentials'});
         }
     } catch(e) {
         next(e);
