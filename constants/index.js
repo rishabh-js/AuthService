@@ -1,0 +1,8 @@
+const SALT_ROUNDS = 10;
+
+const JWT_PRIVATE_KEY = "1.de3WDDFL;H06;7..FDGTH125411!!DFGBVB)("
+
+module.exports = {
+    SALT_ROUNDS,
+    JWT_PRIVATE_KEY
+}
