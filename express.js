@@ -13,12 +13,13 @@ app.use('/v1/user', require('./router/user'));
 app.use(function(req, res, next) {
     const message = 'Requested route doesn\'t exists';
     const err = new Error(message);
+    err.status = 404;
     next(err);
 });
 
 //error handling
 app.use(function(err, req, res, next){
-    const status = err.status || res.statusCode || 500;
+    const status = err.status || 500;
     const message = err.message;
     if(process.env.NODE_ENV === 'production') {
         console.log({err: message});
